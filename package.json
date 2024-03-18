@@ -1,0 +1,31 @@
+{
+  "name": "-ray",
+  "version": "1.0.0",
+  "description": "A library to save your tokens",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rcmade/-ray.git"
+  },
+  "keywords": [
+    "token",
+    "token organizer"
+  ],
+  "author": "Rahul chourasiya <rahulchourasiya4567@@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rcmade/-ray.git/issues"
+  },
+  "homepage": "https://github.com/Rcmade/-ray.git#readme",
+  "files": [
+    "lib/**/*"
+  ],
+  "devDependencies": {
+    "typescript": "^5.4.2"
+  }
+}
