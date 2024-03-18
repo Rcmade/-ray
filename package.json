@@ -1,5 +1,5 @@
 {
-  "name": "-ray",
+  "name": "@ray",
   "version": "1.0.0",
   "description": "A library to save your tokens",
   "main": "lib/index.js",
