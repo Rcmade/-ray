@@ -20,7 +20,7 @@ To install `@rcmade/ray` globally on your system, allowing you to use it from an
 
 ```sh
 npm install -g @rcmade/ray
-
+```
 
 ## Troubleshooting Autocompletion
 
@@ -47,7 +47,6 @@ In some cases, autocompletion might not activate even after restarting your term
 3. **Restart your computer**: If the autocompletion feature is still not working, try restarting your computer. This ensures that all shell instances are refreshed with the updated configurations.
 
 By following these steps, you should be able to resolve most issues with autocompletion not working as expected. If problems persist, please consult the `ray` documentation or reach out for support.
-```
 
 ## Available Commands
 

@@ -34,7 +34,11 @@
     "setup-autocomplete.js"
   ],
   "licenses": [
-    "MIT"
+    {
+      "license": {
+        "type": "MIT"
+      }
+    }
   ],
   "devDependencies": {
     "@types/inquirer": "^9.0.7",
