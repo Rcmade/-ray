@@ -16,15 +16,7 @@ const listTokens = () => {
 
     // Extract and list the names of all stored tokens.
     const tokenNames = Object.keys(data);
-
-    if (tokenNames.length === 0) {
-      // Inform the user if no tokens are currently stored.
-      console.log("No tokens found.");
-      return;
-    }
-
     // Display the names of all tokens if available.
-    console.log("Available tokens:");
     tokenNames.forEach((name) => {
       console.log(`- ${name}`);
     });

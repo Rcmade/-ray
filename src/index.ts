@@ -10,6 +10,7 @@ program.version(
   "Output the current version of ray CLI"
 );
 
+
 // Dynamically register commands from the cli object
 Object.keys(cli).forEach((command) => {
   const key = command as keyof typeof cli;

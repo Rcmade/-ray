@@ -1,8 +1,11 @@
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
+const readline = require("readline");
 
-const bashrcPath = path.join(os.homedir(), ".bashrc");
+// Define the path to the user's shell profiles
+const shellProfiles = [".bashrc", ".bash_profile", ".zshrc"];
+
 const autocompleteScriptPath = path.join(
   __dirname,
   "autocomplete",
@@ -10,22 +13,49 @@ const autocompleteScriptPath = path.join(
 );
 const sourceString = `\n[ -f ${autocompleteScriptPath} ] && . ${autocompleteScriptPath}\n`;
 
-// Append source string to .bashrc, if not already present
-fs.readFile(bashrcPath, "utf8", (err, data) => {
-  console.log({ autocompleteScriptPath });
-  if (err) {
-    console.error("Error reading .bashrc:", err);
-    return;
-  }
-  if (data.includes(autocompleteScriptPath)) {
-    console.log("Autocomplete script already sourced in .bashrc");
-  } else {
-    fs.appendFile(bashrcPath, sourceString, (err) => {
-      if (err) {
-        console.error("Error appending to .bashrc:", err);
-      } else {
-        console.log("Autocomplete setup completed.");
-      }
-    });
-  }
-});
+
+
+
+
+
+// const fs = require("fs");
+// const os = require("os");
+// const path = require("path");
+
+// // Adjust the filename according to your actual script's location and name
+// const autocompleteScriptPath = path.join(
+//   __dirname,
+//   "autocomplete",
+//   "ray-autocomplete.bash"
+// );
+
+// Assuming Bash as the default shell
+const profileFilePath = path.join(os.homedir(), ".bashrc");
+
+function appendAutocompleteSourceCommand() {
+        shellProfiles.forEach((profileName) => {
+          const profilePath = path.join(os.homedir(), profileName);
+
+          // Skip if profile file doesn't exist
+          if (!fs.existsSync(profilePath)) return;
+
+          try {
+            const content = fs.readFileSync(profilePath, "utf8");
+
+            // Check if the script is already sourced in the profile
+            if (content.includes(sourceString.trim())) {
+              console.log(
+                `${profileName} already sources the autocompletion script.`
+              );
+            } else {
+              // Append source string to the profile
+              fs.appendFileSync(profilePath, sourceString);
+              console.log(`Autocompletion setup completed in ${profileName}.`);
+            }
+          } catch (err) {
+            console.error(`Error updating ${profileName}:`, err);
+          }
+        });
+}
+
+appendAutocompleteSourceCommand();
