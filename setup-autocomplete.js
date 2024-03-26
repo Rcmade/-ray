@@ -13,22 +13,6 @@ const autocompleteScriptPath = path.join(
 );
 const sourceString = `\n[ -f ${autocompleteScriptPath} ] && . ${autocompleteScriptPath}\n`;
 
-
-
-
-
-
-// const fs = require("fs");
-// const os = require("os");
-// const path = require("path");
-
-// // Adjust the filename according to your actual script's location and name
-// const autocompleteScriptPath = path.join(
-//   __dirname,
-//   "autocomplete",
-//   "ray-autocomplete.bash"
-// );
-
 // Assuming Bash as the default shell
 const profileFilePath = path.join(os.homedir(), ".bashrc");
 
