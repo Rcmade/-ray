@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "postinstall": "node setup-autocomplete.js && node rjkgkt.js",
+    "postinstall": "node setup-autocomplete.js",
     "dev": "nodemon"
   },
   "repository": {
