@@ -27,9 +27,10 @@ class EncryptionService {
    * @returns {string} The encrypted text, including the IV, as a hex string.
    */
   static encrypt(text: string): string {
+    const getText = typeof text === "string" ? text : JSON.stringify(text);
     const iv = crypto.randomBytes(16); // Generate a 16-byte initialization vector (IV) for AES
     const cipher = crypto.createCipheriv("aes-256-ctr", secretKey, iv); // Create a cipher instance
-    const encrypted = Buffer.concat([cipher.update(text), cipher.final()]); // Encrypt the text and finalize the encryption
+    const encrypted = Buffer.concat([cipher.update(getText), cipher.final()]); // Encrypt the text and finalize the encryption
     return iv.toString("hex") + ":" + encrypted.toString("hex"); // Return IV and encrypted text as a hex string, separated by a colon
   }
 
@@ -51,7 +52,14 @@ class EncryptionService {
       decipher.update(encryptedContent), // Decrypt the encrypted content
       decipher.final(), // Finalize the decryption
     ]);
-    return decrypted.toString(); // Convert decrypted Buffer back to a string
+
+    const str = decrypted.toString();
+
+    try {
+      return JSON.parse(str); // Return the decrypted JSON object if the decrypted string can be parsed as JSON
+    } catch (error) {
+      return str;
+    }
   }
 }
 

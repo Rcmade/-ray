@@ -1,15 +1,9 @@
 // Inside src/commands/list.ts
 
+import { logInfo } from "../loggers";
 import StorageService from "../service/storage.service";
 
-/**
- * Lists all the token names currently stored. It retrieves the token names
- * from the storage, checks if there are any tokens available, and prints
- * each token name to the console. If no tokens are found, it notifies the user.
- * Any errors encountered during the process are caught and logged, indicating
- * an issue with accessing or reading the storage.
- */
-const listTokens = () => {
+const list = () => {
   try {
     // Retrieve the entire data object from storage.
     let data = StorageService.readStorage();
@@ -18,7 +12,7 @@ const listTokens = () => {
     const tokenNames = Object.keys(data);
     // Display the names of all tokens if available.
     tokenNames.forEach((name) => {
-      console.log(`- ${name}`);
+      logInfo(`- ${name}`);
     });
   } catch (error) {
     // Log any errors encountered during the listing process.
@@ -26,4 +20,4 @@ const listTokens = () => {
   }
 };
 
-export default listTokens;
+export default list;

@@ -12,7 +12,7 @@ import * as readline from "readline";
     "autocomplete",
     "ray-autocomplete.bash"
   );
-  const sourceString: string = `\n[ -f ${autocompleteScriptPath} ] && . ${autocompleteScriptPath}\n`;
+  const sourceString = `\n[ -f ${autocompleteScriptPath} ] && . ${autocompleteScriptPath}\n`;
 
   // Create readline interface for user input
   const rl = readline.createInterface({

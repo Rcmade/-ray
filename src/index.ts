@@ -1,28 +1,59 @@
 #!/usr/bin/env node
-import { program } from "commander";
-import * as packageJson from "../package.json";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 import cli from "./cli";
-import { showTokenValue } from "./commands/show";
+import { showSnippet } from "./commands/show";
 
-program.version(
-  packageJson.version,
-  "-v, --version",
-  "Output the current version of ray CLI"
-);
-
-
-// Dynamically register commands from the cli object
-Object.keys(cli).forEach((command) => {
-  const key = command as keyof typeof cli;
-  program
-    .command(cli[key].help)
-    .description(cli[key].description)
-    .action(cli[key].action);
-});
-
-// Add a catch-all command handler for unmatched commands, which are assumed to be token names
-program
-  .arguments("<tokenName>") // Use .arguments() for catch-all behavior
-  .action(showTokenValue);
-
-program.parse(process.argv);
+yargs(hideBin(process.argv))
+  .version("1.0.0") // Set version
+  .command(
+    cli.add.help,
+    cli.add.description,
+    (yargs) => {
+      return yargs
+        .option("c", {
+          alias: "command",
+          type: "boolean",
+          description: "Indicates that the value is a command",
+        })
+        .positional("name", {
+          describe: cli.add.name,
+          type: "string",
+        })
+        .positional("value", {
+          describe: cli.add.value,
+          type: "string",
+        });
+    },
+    (argv) => {
+      cli.add.action({
+        name: argv.name as string,
+        value: argv.value as string,
+        isCommand: !!argv?.command,
+      });
+    }
+  )
+  .command(cli.list.help, cli.list.description, {}, cli.list.action)
+  .command(
+    cli.remove.help,
+    cli.remove.description,
+    (yargs) => {
+      return yargs.positional("name", {
+        describe: cli.remove.name,
+        type: "string",
+      });
+    },
+    (argv) => {
+      cli.remove.action(argv.name as string);
+    }
+  )
+  .command(
+    cli["list-commands"].help,
+    cli["list-commands"].description,
+    {},
+    cli["list-commands"].action
+  )
+  .command("* <name>", "Show token value", {}, (argv) => {
+    showSnippet(argv.name as string);
+  }) // Catch-all command
+  .help().argv;
