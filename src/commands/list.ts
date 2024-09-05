@@ -1,6 +1,5 @@
 // Inside src/commands/list.ts
 
-import { logInfo } from "../loggers";
 import StorageService from "../service/storage.service";
 
 const list = () => {
@@ -12,7 +11,7 @@ const list = () => {
     const tokenNames = Object.keys(data);
     // Display the names of all tokens if available.
     tokenNames.forEach((name) => {
-      logInfo(`- ${name}`);
+      console.log(`- ${name}`);
     });
   } catch (error) {
     // Log any errors encountered during the listing process.

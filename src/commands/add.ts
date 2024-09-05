@@ -3,7 +3,6 @@ import EncryptionService from "../service/encryption.service";
 import { getCLI } from "../cli";
 import StorageService from "../service/storage.service";
 import InputService from "../service/input.service";
-import { logSuccess, logWarning } from "../loggers";
 import { AddFunArgs } from "../types";
 
 const storagePath = path.join(
@@ -16,7 +15,7 @@ const add = async ({ name, value, isCommand }: AddFunArgs) => {
   const cli = await getCLI();
   const reservedCommands = Object.keys(cli || {});
   if (reservedCommands.includes(name)) {
-    logWarning(
+    console.log(
       `The name "${name}" is reserved. Please choose a different name.`
     );
     return;
@@ -34,14 +33,14 @@ const add = async ({ name, value, isCommand }: AddFunArgs) => {
       if (answer) {
         data[name] = EncryptionService.encrypt(value);
         StorageService.writeStorage(data);
-        logSuccess(`Name: ${name} updated successfully.`);
+        console.log(`Name: ${name} updated successfully.`);
       } else {
-        logWarning(`Name: ${name} was not updated.`);
+        console.log(`Name: ${name} was not updated.`);
       }
     } else {
       data[name] = EncryptionService.encrypt(value);
       StorageService.writeStorage(data);
-      logSuccess(`Snippet ${name} added successfully.`);
+      console.log(`Snippet ${name} added successfully.`);
     }
   } catch (error) {
     console.error("An error occurred:", error);

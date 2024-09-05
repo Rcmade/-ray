@@ -1,7 +1,6 @@
 // Assuming StorageService is similar to InputService in structure and purpose
 import StorageService from "../service/storage.service";
 import InputService from "../service/input.service";
-import { logError, logSuccess, logWarning } from "../loggers";
 
 const remove = async (name: string) => {
   const data = StorageService.readStorage();
@@ -13,12 +12,12 @@ const remove = async (name: string) => {
     if (answer) {
       delete data[name];
       StorageService.writeStorage(data);
-      logSuccess(`Name: '${name}' has been removed.`);
+      console.log(`Name: '${name}' has been removed.`);
     } else {
-      logWarning("Removal cancelled.");
+      console.log("Removal cancelled.");
     }
   } else {
-    logError(`Name '${name}' not found.`);
+    console.log(`Name '${name}' not found.`);
   }
 };
 
