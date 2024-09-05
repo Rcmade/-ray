@@ -1,10 +1,10 @@
 import path from "path";
-import EncryptionService from "@/service/encryption.service";
-import { getCLI } from "@/cli";
-import StorageService from "@/service/storage.service";
-import InputService from "@/service/input.service";
-import { logSuccess, logWarning } from "@/loggers";
-import { AddFunArgs } from "@/types";
+import EncryptionService from "../service/encryption.service";
+import { getCLI } from "../cli";
+import StorageService from "../service/storage.service";
+import InputService from "../service/input.service";
+import { logSuccess, logWarning } from "../loggers";
+import { AddFunArgs } from "../types";
 
 const storagePath = path.join(
   process.env.HOME || process.env.USERPROFILE || ".",

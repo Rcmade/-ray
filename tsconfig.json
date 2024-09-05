@@ -12,13 +12,7 @@
     "resolveJsonModule": true,
     "outDir": "./lib",
     "rootDir": "./src",
-    "lib": ["ES2019"], // Optionally added to align with target
-
-    // Path alias configuration
-    "baseUrl": "./src", // Set the base directory to ./src
-    "paths": {
-      "@/*": ["*"] // Map @/ to the src folder
-    }
+    "lib": ["ES2019"] // Optionally added to align with target
   },
   "include": ["src", "setup-autocomplete.js"],
   "exclude": ["node_modules", "**/_tests__/*"]
