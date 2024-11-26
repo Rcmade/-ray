@@ -1,9 +1,12 @@
+import { execSync } from "child_process";
+import fs from "fs";
+import os from "os";
 import path from "path";
 import EncryptionService from "../service/encryption.service";
-import { getCLI } from "../cli";
 import StorageService from "../service/storage.service";
 import InputService from "../service/input.service";
 import { AddFunArgs } from "../types";
+import EditorService from "../service/editor.service";
 
 const storagePath = path.join(
   process.env.HOME || process.env.USERPROFILE || ".",
@@ -11,8 +14,7 @@ const storagePath = path.join(
 );
 
 const add = async ({ name, value, isCommand }: AddFunArgs) => {
-  // Retrieve reserved commands to prevent using them as token names.
-  const cli = await getCLI();
+  const cli = await import("../cli").then((module) => module.default);
   const reservedCommands = Object.keys(cli || {});
   if (reservedCommands.includes(name)) {
     console.log(
@@ -20,6 +22,30 @@ const add = async ({ name, value, isCommand }: AddFunArgs) => {
     );
     return;
   }
+
+  if (!value && isCommand) {
+    console.log("Opening editor for multiline input...");
+    const val = EditorService.openEditorForMultilineInput();
+    if (!val) {
+      console.log("No content provided. Operation aborted.");
+      return;
+    }
+    value = val;
+    if (!value) {
+      console.log("No content provided. Operation aborted.");
+      return;
+    }
+  }
+
+  // If neither value nor command is provided, show an error and explain how to use the command
+  if (!value && !isCommand) {
+    console.log(
+      `Error: You must provide either a value or the --command flag.`
+    );
+    console.log(`Usage: ray add <name> <value>`);
+    return;
+  }
+
   try {
     let data = StorageService.readStorage();
     if (data[name]) {
@@ -46,4 +72,5 @@ const add = async ({ name, value, isCommand }: AddFunArgs) => {
     console.error("An error occurred:", error);
   }
 };
+
 export default add;

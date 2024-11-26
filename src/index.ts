@@ -5,34 +5,52 @@ import cli from "./cli";
 import { showSnippet } from "./commands/show";
 
 yargs(hideBin(process.argv))
-  .version("1.0.0") // Set version
+  .version("1.0.0")
+
+  // Define the 'add' command using cli.add properties
   .command(
-    cli.add.help,
-    cli.add.description,
+    "add <name> [value]",
+    cli.add.description, // Description from cli.add
     (yargs) => {
+      // Set up the positional arguments using cli.add options
       return yargs
-        .option("c", {
-          alias: "command",
-          type: "boolean",
-          description: "Indicates that the value is a command",
-        })
         .positional("name", {
           describe: cli.add.name,
           type: "string",
+          demandOption: true, // Name is always required
         })
         .positional("value", {
           describe: cli.add.value,
           type: "string",
+          default: "", // Default empty string if not provided
+        })
+        .option("c", {
+          alias: "command",
+          type: "boolean",
+          description: cli.add.options.command.description, // Using the command flag description from cli.add
+        })
+        .check((argv) => {
+          // Custom validation for missing value when 'command' flag is set
+          if (argv.command && !argv.value) {
+            throw new Error(
+              `Error: You must provide either a value or the --command flag.\n Usage: ray add <name> <value> [--command]`
+            );
+          }
+          return true; // Returning true means no error
         });
     },
     (argv) => {
+      // Get arguments from argv and call the action
+      const { name, value, command } = argv;
       cli.add.action({
-        name: argv.name as string,
-        value: argv.value as string,
-        isCommand: !!argv?.command,
+        name: name as string,
+        value: value as string,
+        isCommand: !!command,
       });
     }
   )
+
+  // Other commands like 'list', 'remove', etc.
   .command(cli.list.help, cli.list.description, {}, cli.list.action)
   .command(
     cli.remove.help,
@@ -53,7 +71,10 @@ yargs(hideBin(process.argv))
     {},
     cli["list-commands"].action
   )
+
+  // Catch-all command to show token value
   .command("* <name>", "Show token value", {}, (argv) => {
     showSnippet(argv.name as string);
-  }) // Catch-all command
-  .help().argv;
+  })
+
+  .help().argv; // Display help // Parse the arguments
