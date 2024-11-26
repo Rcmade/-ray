@@ -16,6 +16,7 @@ const storagePath = path.join(
 const add = async ({ name, value, isCommand }: AddFunArgs) => {
   const cli = await import("../cli").then((module) => module.default);
   const reservedCommands = Object.keys(cli || {});
+  console.log(isCommand);
   if (reservedCommands.includes(name)) {
     console.log(
       `The name "${name}" is reserved. Please choose a different name.`

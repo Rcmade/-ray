@@ -12,7 +12,8 @@
     "build": "tsc",
     "prepare": "npm run build",
     "postinstall": "node setup-autocomplete.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "test-local":"npm r -g @rcmade/ray && npm run build && npm link"
   },
   "repository": {
     "type": "git",

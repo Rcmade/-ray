@@ -3,9 +3,10 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import cli from "./cli";
 import { showSnippet } from "./commands/show";
+import { version } from "../package.json";
 
 yargs(hideBin(process.argv))
-  .version("1.0.0")
+  .version(version)
 
   // Define the 'add' command using cli.add properties
   .command(
@@ -30,8 +31,9 @@ yargs(hideBin(process.argv))
           description: cli.add.options.command.description, // Using the command flag description from cli.add
         })
         .check((argv) => {
+          console.log({ argv });
           // Custom validation for missing value when 'command' flag is set
-          if (argv.command && !argv.value) {
+          if (!argv.command && !argv.value) {
             throw new Error(
               `Error: You must provide either a value or the --command flag.\n Usage: ray add <name> <value> [--command]`
             );

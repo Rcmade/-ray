@@ -4,7 +4,7 @@
 
 `@rcmade/ray` is designed to empower developers with a secure and convenient way to manage their credentials directly from the terminal. It addresses key challenges:
 
-- **Security**: Safely encrypts and stores various credentials, such as API keys and GitHub tokens, ensuring they are protected yet easily retrievable.
+- **Security**: Safely encrypts and stores various credentials, such as API keys and GitHub snippets, ensuring they are protected yet easily retrievable.
 - **Accessibility**: Provides instant access to stored credentials from any terminal, enhancing workflow efficiency without compromising on security.
 - **Convenience**: Eliminates the hassle of managing multiple credentials by centralizing them in a single, easy-to-use terminal application.
 
@@ -52,18 +52,25 @@ By following these steps, you should be able to resolve most issues with autocom
 
 `@rcmade/ray` provides a suite of commands designed to manage your credentials securely and efficiently directly from the terminal. Below is a list of available commands along with their descriptions:
 
-### `add <tokenName> <tokenValue>`
+### `add <snippetName> <snippetValue>`
 
-- **Description**: Adds a new token with the specified name and value. This command securely stores the token for later use.
+- **Description**: Adds a new snippet with the specified name and value. This command securely stores the snippet for later use.
 - **Usage**:
 
     ```sh
-    ray add github myGithubToken
+    ray add githubToken myGithubSnippet
     ```
 
-### `ray <tokenName>`
+    Or
 
-- **Description**: Retrieves and displays the value of the specified token. Use this command to quickly access the value of a securely stored token by its name.
+    ```sh
+    ray add myCodeSnippet -c // -c will open the default editor if not specified then use "export EDITOR=vim"
+
+    ```
+
+### `ray <snippetName>`
+
+- **Description**: Retrieves and displays the value of the specified snippet. Use this command to quickly access the value of a securely stored snippet by its name.
 - **Usage**:
 
     ```sh
@@ -72,16 +79,16 @@ By following these steps, you should be able to resolve most issues with autocom
 
 ### `list`
 
-- **Description**: Lists all stored tokens, displaying their names. This command helps you quickly see what tokens you have stored.
+- **Description**: Lists all stored snippets, displaying their names. This command helps you quickly see what snippets you have stored.
 - **Usage**:
 
     ```sh
     ray list
     ```
 
-### `remove <tokenName>`
+### `remove <snippetName>`
 
-- **Description**: Removes a token by its name. This command is useful for deleting tokens that are no longer needed.
+- **Description**: Removes a snippet by its name. This command is useful for deleting snippets that are no longer needed.
 - **Usage**:
 
     ```sh
